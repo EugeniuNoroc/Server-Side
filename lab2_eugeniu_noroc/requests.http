@@ -1,0 +1,129 @@
+@baseUrl = http://localhost:3000/api
+
+### ===== КНИГИ =====
+
+### 200 — все книги
+GET {{baseUrl}}/books
+
+### 200 — фильтр по жанру (без учёта регистра)
+GET {{baseUrl}}/books?genre=FANTASY
+
+### 200 — фильтр по году
+GET {{baseUrl}}/books?year=2008
+
+### 200 — фильтр по жанру и году вместе
+GET {{baseUrl}}/books?genre=programming&year=2014
+
+### 200 — поиск по части названия (без учёта регистра)
+GET {{baseUrl}}/books/search?title=node
+
+### 200 — поиск, ничего не найдено (пустой массив [])
+GET {{baseUrl}}/books/search?title=harry
+
+### 400 — поиск без параметра title
+GET {{baseUrl}}/books/search
+
+### 200 — книга по id
+GET {{baseUrl}}/books/1
+
+### 404 — книга не найдена
+GET {{baseUrl}}/books/999
+
+### 201 — добавление книги
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "title": "The Clean Coder",
+  "authorId": 3,
+  "genre": "programming",
+  "year": 2011
+}
+
+### 400 — нет обязательных полей
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "title": "Book without fields"
+}
+
+### 400 — authorId и year не числа
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "title": "Wrong types",
+  "authorId": "abc",
+  "genre": "fantasy",
+  "year": "2000"
+}
+
+### 400 — несуществующий автор (задание 8.3)
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "title": "Unknown Author Book",
+  "authorId": 999,
+  "genre": "fantasy",
+  "year": 2020
+}
+
+### 200 — частичное изменение книги
+PATCH {{baseUrl}}/books/2
+Content-Type: application/json
+
+{
+  "genre": "novel",
+  "year": 1950
+}
+
+### 400 — PATCH с несуществующим автором
+PATCH {{baseUrl}}/books/2
+Content-Type: application/json
+
+{
+  "authorId": 999
+}
+
+### 404 — PATCH несуществующей книги
+PATCH {{baseUrl}}/books/999
+Content-Type: application/json
+
+{
+  "title": "Nothing"
+}
+
+### 200 — удаление книги
+DELETE {{baseUrl}}/books/5
+
+### 404 — удаление несуществующей книги
+DELETE {{baseUrl}}/books/999
+
+### ===== АВТОРЫ =====
+
+### 200 — все авторы
+GET {{baseUrl}}/authors
+
+### 200 — автор по id
+GET {{baseUrl}}/authors/1
+
+### 404 — автор не найден
+GET {{baseUrl}}/authors/999
+
+### 200 — книги автора
+GET {{baseUrl}}/authors/1/books
+
+### 404 — книги несуществующего автора
+GET {{baseUrl}}/authors/999/books
+
+### ===== СТАТИСТИКА =====
+
+### 200 — статистика (задание 8.2)
+GET {{baseUrl}}/statistics
+
+### ===== НЕИЗВЕСТНЫЙ МАРШРУТ =====
+
+### 404 — Route not found
+GET {{baseUrl}}/unknown
