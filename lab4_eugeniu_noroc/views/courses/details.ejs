@@ -1,0 +1,44 @@
+<%- include('../partials/header') %>
+
+<a href="/courses" class="back-link">&larr; К списку курсов</a>
+
+<article class="card details">
+    <h1><%= course.title %></h1>
+
+    <dl class="details-list">
+        <dt>Количество кредитов</dt>
+        <dd><%= course.credits %></dd>
+
+        <dt>Семестр</dt>
+        <dd><%= course.semester %></dd>
+
+        <dt>Описание</dt>
+        <dd><%= course.description %></dd>
+    </dl>
+
+    <h2>Преподаватель</h2>
+    <% if (course.Teacher) { %>
+        <dl class="details-list">
+            <dt>Имя</dt>
+            <dd><a href="/teachers/<%= course.Teacher.id %>"><%= course.Teacher.name %></a></dd>
+
+            <dt>Email</dt>
+            <dd><%= course.Teacher.email %></dd>
+
+            <dt>Кафедра</dt>
+            <dd><%= course.Teacher.department %></dd>
+        </dl>
+    <% } else { %>
+        <p class="muted">Преподаватель не назначен</p>
+    <% } %>
+
+    <div class="actions">
+        <a href="/courses" class="btn btn-light">К списку</a>
+        <a href="/courses/<%= course.id %>/edit" class="btn btn-edit">Редактировать</a>
+        <form action="/courses/<%= course.id %>/delete" method="POST" onsubmit="return confirm('Вы действительно хотите удалить этот курс?')">
+            <button type="submit" class="btn btn-delete">Удалить</button>
+        </form>
+    </div>
+</article>
+
+<%- include('../partials/footer') %>

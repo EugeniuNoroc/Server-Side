@@ -1,0 +1,67 @@
+<%- include('partials/header') %>
+
+<h1>Статистика</h1>
+
+<div class="stats-grid">
+    <div class="stat">
+        <span class="stat-value"><%= teacherCount %></span>
+        <span class="stat-label">Преподавателей</span>
+    </div>
+    <div class="stat">
+        <span class="stat-value"><%= courseCount %></span>
+        <span class="stat-label">Курсов</span>
+    </div>
+    <div class="stat stat-wide">
+        <span class="stat-label">Больше всего курсов</span>
+        <% if (topTeachers.length === 0) { %>
+            <span class="stat-name">—</span>
+        <% } else { %>
+            <span class="stat-name">
+                <% topTeachers.forEach((t, i) => { %><a href="/teachers/<%= t.id %>"><%= t.name %></a><%= i < topTeachers.length - 1 ? ', ' : '' %><% }) %>
+            </span>
+            <span class="muted"><%= maxCount %> курс(а/ов)</span>
+        <% } %>
+    </div>
+</div>
+
+<div class="stats-columns">
+    <section class="card">
+        <h2>Курсы по семестрам</h2>
+        <% if (bySemester.length === 0) { %>
+            <p class="muted">Курсов пока нет</p>
+        <% } else { %>
+            <table class="table">
+                <thead><tr><th>Семестр</th><th>Курсов</th></tr></thead>
+                <tbody>
+                    <% bySemester.forEach(s => { %>
+                        <tr>
+                            <td><a href="/courses?semester=<%= s.semester %>">Семестр <%= s.semester %></a></td>
+                            <td><%= s.count %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </section>
+
+    <section class="card">
+        <h2>Курсы по преподавателям</h2>
+        <% if (byTeacher.length === 0) { %>
+            <p class="muted">Преподавателей пока нет</p>
+        <% } else { %>
+            <table class="table">
+                <thead><tr><th>Преподаватель</th><th>Курсов</th></tr></thead>
+                <tbody>
+                    <% byTeacher.forEach(t => { %>
+                        <tr>
+                            <td><a href="/teachers/<%= t.id %>"><%= t.name %></a></td>
+                            <td><%= t.courseCount %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </section>
+</div>
+
+<%- include('partials/footer') %>

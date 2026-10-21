@@ -1,0 +1,11 @@
+<%- include('partials/header') %>
+
+<div class="card error-page">
+    <p class="error-code">404</p>
+    <h1>Not Found</h1>
+    <p>Запрашиваемая страница или курс не найдены.</p>
+    <p class="muted">Запрошенный URL: <code><%= url %></code></p>
+    <a href="/courses" class="btn btn-primary">К списку курсов</a>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,38 @@
+<%- include('../partials/header') %>
+
+<a href="/teachers/<%= teacher.id %>" class="back-link">&larr; К преподавателю</a>
+
+<div class="card">
+    <h1>Редактировать преподавателя</h1>
+
+    <% if (errors.length > 0) { %>
+        <div class="errors">
+            <ul>
+                <% errors.forEach(err => { %>
+                    <li><%= err %></li>
+                <% }) %>
+            </ul>
+        </div>
+    <% } %>
+
+    <form action="/teachers/<%= teacher.id %>/edit" method="POST" class="form">
+        <label for="name">Имя</label>
+        <input type="text" id="name" name="name" value="<%= teacher.name %>">
+
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" value="<%= teacher.email %>">
+
+        <label for="department">Кафедра</label>
+        <input type="text" id="department" name="department" value="<%= teacher.department %>">
+
+        <label for="academicDegree">Учёная степень</label>
+        <input type="text" id="academicDegree" name="academicDegree" value="<%= teacher.academicDegree %>">
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            <a href="/teachers/<%= teacher.id %>" class="btn btn-light">Отмена</a>
+        </div>
+    </form>
+</div>
+
+<%- include('../partials/footer') %>

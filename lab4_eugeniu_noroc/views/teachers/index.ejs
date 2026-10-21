@@ -1,0 +1,46 @@
+<%- include('../partials/header') %>
+
+<div class="page-head">
+    <h1>Преподаватели</h1>
+    <a href="/teachers/new" class="btn btn-primary">+ Добавить преподавателя</a>
+</div>
+
+<% if (teachers.length === 0) { %>
+    <p class="empty">Преподаватели не найдены</p>
+<% } else { %>
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Email</th>
+                    <th>Кафедра</th>
+                    <th>Учёная степень</th>
+                    <th>Курсов</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% teachers.forEach(t => { %>
+                    <tr>
+                        <td><%= t.name %></td>
+                        <td><%= t.email %></td>
+                        <td><%= t.department %></td>
+                        <td><%= t.academicDegree %></td>
+                        <td><%= t.get('courseCount') %></td>
+                        <td class="actions">
+                            <a href="/teachers/<%= t.id %>" class="btn btn-view">Просмотр</a>
+                            <a href="/teachers/<%= t.id %>/edit" class="btn btn-edit">Изменить</a>
+                            <form action="/teachers/<%= t.id %>/delete" method="POST" onsubmit="return confirm('Вы действительно хотите удалить этого преподавателя?')">
+                                <button type="submit" class="btn btn-delete">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <p class="muted">Всего преподавателей: <%= teachers.length %></p>
+<% } %>
+
+<%- include('../partials/footer') %>

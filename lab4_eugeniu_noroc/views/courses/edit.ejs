@@ -1,0 +1,51 @@
+<%- include('../partials/header') %>
+
+<a href="/courses/<%= course.id %>" class="back-link">&larr; К курсу</a>
+
+<div class="card">
+    <h1>Редактировать курс</h1>
+
+    <% if (errors.length > 0) { %>
+        <div class="errors">
+            <ul>
+                <% errors.forEach(err => { %>
+                    <li><%= err %></li>
+                <% }) %>
+            </ul>
+        </div>
+    <% } %>
+
+    <form action="/courses/<%= course.id %>/edit" method="POST" class="form">
+        <label for="title">Название дисциплины</label>
+        <input type="text" id="title" name="title" value="<%= course.title %>">
+
+        <label for="credits">Количество кредитов</label>
+        <input type="number" id="credits" name="credits" min="1" step="1" value="<%= course.credits %>">
+
+        <label for="semester">Семестр</label>
+        <select id="semester" name="semester">
+            <option value="">— выберите —</option>
+            <% for (let i = 1; i <= 8; i++) { %>
+                <option value="<%= i %>" <%= String(course.semester) === String(i) ? 'selected' : '' %>><%= i %></option>
+            <% } %>
+        </select>
+
+        <label for="description">Описание</label>
+        <textarea id="description" name="description" rows="4"><%= course.description %></textarea>
+
+        <label for="teacherId">Преподаватель</label>
+        <select id="teacherId" name="teacherId">
+            <option value="">— выберите преподавателя —</option>
+            <% teachers.forEach(t => { %>
+                <option value="<%= t.id %>" <%= String(course.teacherId) === String(t.id) ? 'selected' : '' %>><%= t.name %> (<%= t.department %>)</option>
+            <% }) %>
+        </select>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            <a href="/courses/<%= course.id %>" class="btn btn-light">Отмена</a>
+        </div>
+    </form>
+</div>
+
+<%- include('../partials/footer') %>
